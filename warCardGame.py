@@ -176,7 +176,7 @@ def determineWinner(playerOneHand, playerTwoHand, oneScore, twoScore, i, totalRo
         playerTwoWinner = False
         playing = False
     else:
-        if totalRounds == 150:
+        if totalRounds == 75:
             playing = False
             if len(playerOneHand) > len(playerTwoHand):
                 playerOneWinner = True
