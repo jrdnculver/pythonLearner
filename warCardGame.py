@@ -21,7 +21,6 @@ def warGame():
     playerOneHand, playerTwoHand = passCards(deck)
     totalRounds = 0
     while warring == True:
-        print(totalRounds)
         playerOneCard, playerTwoCard, p1Card, p2Card, i = displayCard(
             playerOneHand, playerTwoHand, i)
         pOneValue, pTwoValue = findWinner(playerOneCard, playerTwoCard)
@@ -34,8 +33,8 @@ def warGame():
             playerOneHand, playerTwoHand,  oneScore, twoScore, i, totalRounds, rounds)
         if simulation == False:
             dealIt = input("Do you want to continue? (Y or N):  ")
+            print()
             dealIt = dealIt.upper()
-            print(dealIt)
             if dealIt == "Y":
                 continue
             else:
