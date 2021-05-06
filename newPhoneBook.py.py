@@ -1,5 +1,5 @@
 import csv
-import os
+
 contactNames = []
 contactNumbers = []
 
