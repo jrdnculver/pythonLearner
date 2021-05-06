@@ -17,15 +17,22 @@ def TicTacToe():
             playerOne, playerTwo, currentPlay, piece, xplayerCard, oplayerCard, sol)
         updatedBoard = updateBoard(userTurn, order, piece, sol)
         scoreBoard(updatedBoard)
-        if piece == "X":
-            playing = xWinner(currentPlay, xplayerCard)
-        else:
-            playing = oWinner(currentPlay, oplayerCard)
+        xdivideByTwo, odivideByTwo = divisibleByTwo(xplayerCard, oplayerCard)
+        xdivideByThree, odivideByThree = divisibleByThree(
+            xplayerCard, oplayerCard)
+        xdivideByFour, odivideByFour = divisibleByFour(
+            xplayerCard, oplayerCard)
+        xRandom, xRandomX, oRandom, oRandomO = theRest(
+            xplayerCard, oplayerCard)
+        playing = xoWinner(xplayerCard, oplayerCard,
+                           piece, xdivideByTwo, xdivideByThree,
+                           xdivideByFour, odivideByTwo, odivideByThree,
+                           odivideByFour, xRandom, xRandomX, oRandom, oRandomO)
         if playing == False:
             declareVictory(currentPlay)
             playAgain()
             break
-        playing = gameDraw(oplayerCard, xplayerCard)
+        playing = gameDraw(xplayerCard, oplayerCard)
         currentPlay = switchNames(currentPlay, playerOne, playerTwo)
         piece = switchTurns(piece)
 
@@ -114,7 +121,6 @@ def playerMove(playerOne, playerTwo, currentPlay, piece, xplayerCard, oplayerCar
         xplayerCard.append(card)
     else:
         oplayerCard.append(card)
-    print(xplayerCard, oplayerCard)
 
     return userTurn, xplayerCard, oplayerCard
 
@@ -145,55 +151,47 @@ def switchNames(currentPlay, playerOne, playerTwo):
     return currentPlay
 
 
-def xWinner(currentPlay, xplayerCard):
+def xoWinner(xplayerCard, oplayerCard, piece, xdivideByTwo, xdivideByThree,
+             xdivideByFour, odivideByTwo, odivideByThree, odivideByFour, xRandom, xRandomX, oRandom, oRandomO):
     solutions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
                  [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    print(xdivideByFour)
     playing = True
-    xplayerCard.sort()
+    if piece == "X":
+        playerCard = xplayerCard
+    else:
+        playerCard = oplayerCard
     i = 0
-    while True:
-        if xplayerCard[0:3] == solutions[i]:
-            playing = False
-            break
-        elif xplayerCard[1:4] == solutions[i]:
-            playing = False
-            break
-        elif xplayerCard[2:5] == solutions[i]:
-            playing = False
-            break
-        else:
+    j = 0
+    k = 3
+    stopper = 3
+    playerCard.sort()
 
+    while True:
+        if xdivideByTwo == solutions[i] or xdivideByThree == solutions[i] or xdivideByFour == solutions[i]:
+            playing = False
+            break
+        if odivideByTwo == solutions[i] or odivideByThree == solutions[i] or odivideByFour == solutions[i]:
+            playing = False
+            break
+        if playerCard[0:3] == solutions[i]:
+            playing = False
+            break
+        if i == 7:
+            i = 0
+            j += 1
+            k += 1
+
+        else:
             i += 1
-            if i == len(solutions):
+            if j == stopper:
                 break
+
     return playing
 
 
-def oWinner(currentPlay, oplayerCard):
-    solutions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
-                 [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
-    playing = True
-    oplayerCard.sort()
-    i = 0
-    while True:
-        if oplayerCard[0:3] == solutions[i]:
-            playing = False
-            break
-        elif oplayerCard[1:4] == solutions[i]:
-            playing = False
-            break
-        elif oplayerCard[2:5] == solutions[i]:
-            playing = False
-            break
-        else:
-            i += 1
-            if i == len(solutions):
-                break
-    return playing
-
-
-def gameDraw(oplayerCard, xplayerCard):
-    if len(oplayerCard) + len(xplayerCard) == 9:
+def gameDraw(xplayerCard, oplayerCard):
+    if len(oplayerCard) + len(xplayerCard) == 9 and playing == True:
         print("This game was a draw!  Neither player WON or LOST!")
         playing = False
     else:
@@ -219,4 +217,79 @@ def playAgain():
         print("You need to be more clear!")
 
 
+def divisibleByTwo(xplayerCard, oplayerCard):
+    xdivideByTwo = []
+    odivideByTwo = []
+
+    for x in xplayerCard:
+        if x % 2 == 0:
+            xdivideByTwo.append(x)
+    for o in oplayerCard:
+        if o % 2 == 0:
+            odivideByTwo.append(o)
+
+    xdivideByTwo.sort()
+    odivideByTwo.sort()
+
+    return xdivideByTwo, odivideByTwo
+
+
+def divisibleByThree(xplayerCard, oplayerCard):
+    xdivideByThree = []
+    odivideByThree = []
+
+    for x in xplayerCard:
+        if x % 3 == 0:
+            xdivideByThree.append(x)
+    for o in oplayerCard:
+        if o % 3 == 0:
+            odivideByThree.append(o)
+
+    xdivideByThree.sort()
+    odivideByThree.sort()
+
+    return xdivideByThree, odivideByThree
+
+
+def divisibleByFour(xplayerCard, oplayerCard):
+    xdivideByFour = []
+    odivideByFour = []
+
+    for x in xplayerCard:
+        if x % 4 == 0:
+            xdivideByFour.append(x)
+    for o in oplayerCard:
+        if o % 4 == 0:
+            odivideByFour.append(o)
+
+    xdivideByFour.sort()
+    odivideByFour.sort()
+    print(xdivideByFour)
+
+    return xdivideByFour, odivideByFour
+
+
+def theRest(xplayerCard, oplayerCard):
+    xRandom = []
+    oRandom = []
+    xRandomX = []
+    oRandomO = []
+
+    for x in xplayerCard:
+        if 1 or 4 or 7 in xplayerCard:
+            xRandom.append(x + 1)
+    for x in xplayerCard:
+        if 2 or 5 or 8 in xplayerCard:
+            xRandomX.append(x + 1)
+    for o in oplayerCard:
+        if 1 or 4 or 7 in oplayerCard:
+            oRandom.append(o + 1)
+    for o in oplayerCard:
+        if 2 or 5 or 8 in xplayerCard:
+            oRandomO.append(o + 1)
+
+    return xRandom, xRandomX, oRandom, oRandomO
+
+
 TicTacToe()
+
