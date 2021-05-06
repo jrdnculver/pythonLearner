@@ -32,7 +32,9 @@ def TicTacToe():
             declareVictory(currentPlay)
             playAgain()
             break
-        playing = gameDraw(xplayerCard, oplayerCard)
+        playing, gameOver = gameDraw(xplayerCard, oplayerCard)
+        if gameOver == True:
+            break
         currentPlay = switchNames(currentPlay, playerOne, playerTwo)
         piece = switchTurns(piece)
 
@@ -155,7 +157,7 @@ def xoWinner(xplayerCard, oplayerCard, piece, xdivideByTwo, xdivideByThree,
              xdivideByFour, odivideByTwo, odivideByThree, odivideByFour, xRandom, xRandomX, oRandom, oRandomO):
     solutions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
                  [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
-    print(xdivideByFour)
+
     playing = True
     if piece == "X":
         playerCard = xplayerCard
@@ -191,13 +193,15 @@ def xoWinner(xplayerCard, oplayerCard, piece, xdivideByTwo, xdivideByThree,
 
 
 def gameDraw(xplayerCard, oplayerCard):
-    if len(oplayerCard) + len(xplayerCard) == 9 and playing == True:
-        print("This game was a draw!  Neither player WON or LOST!")
+    if len(xplayerCard) + len(oplayerCard) == 9:
         playing = False
+        print("This game was a draw!  Neither player WON or LOST!")
+        gameOver = True
     else:
         playing = True
+        gameOver = False
 
-    return playing
+    return playing, gameOver
 
 
 def declareVictory(currentPlay):
