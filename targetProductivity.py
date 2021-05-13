@@ -105,14 +105,16 @@ def makingClock(durationTargetHour, durationTargetMin, hours, minutes, lunchTime
         finalHour += 1
     else:
         pass
-
     suffix = "AM"
-    if finalHour >= 12:
-        finalHour = finalHour - 12
-        suffix = "PM"
+    while True:
         if finalHour >= 12:
             finalHour = finalHour - 12
-            suffix = "AM"
+            suffix = "PM"
+            if finalHour >= 12:
+                finalHour = finalHour - 12
+                suffix = "AM"
+        if finalHour < 12:
+            break
     if finalHour == 0:
         finalHour = 12
 
