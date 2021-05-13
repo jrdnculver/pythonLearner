@@ -75,7 +75,7 @@ def passCards(deck):
 
 
 def displayCard(playerOneHand, playerTwoHand, i):
-    # If I reaches the end of player hand length, i will be reset to zero
+    # If i reaches the end of player hand length, i will be reset to zero
     lengthOne = len(playerOneHand)
     lengthTwo = len(playerTwoHand)
 
