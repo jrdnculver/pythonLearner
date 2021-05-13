@@ -42,7 +42,7 @@ def warGame():
     announceWinner(playerOneWinner, playerTwoWinner,
                    totalRounds, playerOneHand, playerTwoHand)
     print()
-    print("Player One: , playerOneHand, "\nPlayerTwo: ", playerTwoHand)
+    print("Player One: , playerOneHand, "\n\nPlayerTwo: ", playerTwoHand, "\n")
     playAgain()
 
 
