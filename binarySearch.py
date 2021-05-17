@@ -1,18 +1,16 @@
 import random
 
 # List of numbers to sequence
-numbers = []
 
 
 def searching():
     findAnother = True
 
-    maxNumber = sequence()
-    print(numbers)
+    numRange, randomList = sequence()
     while findAnother == True:
-        search = searchFor(maxNumber)
-        midPoint = searchAlgorithm(numbers, search)
-        findAnother = finalAnswer(midPoint)
+        search = searchFor(numRange)
+        midPoint = searchAlgorithm(randomList, search)
+        findAnother = finalAnswer(midPoint, randomList)
 
 # Create sequence for algorithm
 
@@ -21,28 +19,25 @@ def sequence():
     while True:
         try:
             numSequence = int(
-                input("How many numbers do you want in the list?: "))
+                input("How many numbers do you want in the list?: \n"))
+            numRange = int(
+                input("What is the high range you want of a random number?\n"))
             break
         except:
-            print("That is not a valid input.  Please type a number!")
-    maxNumber = numSequence * 100
-    i = 1
-    while i <= numSequence:
-        number = random.randint(0, maxNumber)
-        if number not in numbers:
-            numbers.append(number)
-            i += 1
+            print("That is not a valid input.  Please type a number!\n")
+    maxNumber = numSequence
+    randomList = random.sample(range(0, numRange), maxNumber)
 
-    numbers.sort()
+    randomList.sort()
 
-    return maxNumber
+    return numRange, randomList
 
 # Determine the number to search for
 
 
-def searchFor(maxNumber):
-    print(f"A number from 0 to {maxNumber} could be in the list!\n")
-    search = int(input("What number do you want to search for?: "))
+def searchFor(numRange):
+    print(f"A number from 0 to {numRange} could be in the list!\n")
+    search = int(input("What number do you want to search for?: \n"))
 
     return search
 
@@ -66,19 +61,20 @@ def searchAlgorithm(numbers, search):
     return None
 
 
-def finalAnswer(midPoint):
+def finalAnswer(midPoint, randomList):
     if midPoint != None:
         print(f"The midpoint was at index {midPoint}")
-        print(f"The final number found was {numbers[midPoint]}")
+        print(f"The final number found was {randomList[midPoint]}")
     else:
         print("That value was not in the list")
-        guessAnother = tryAnother()
+
+    guessAnother = tryAnother()
 
     return guessAnother
 
 
 def tryAnother():
-    retry = input("Would you like to find another value in the same list?")
+    retry = input("Would you like to find another value in the same list?\n")
     retry = retry.upper()
 
     if retry == "Y":
