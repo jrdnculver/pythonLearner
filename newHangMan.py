@@ -5,57 +5,48 @@ def HangmanApp():
     wrongLetters = []
 
     while playing == True:
-        secWord, userLetterList = gettingSecretWord()
+        secWord = gettingSecretWord()
         space()
-        letterList = copySecretLetterList(userLetterList)
-        blankLetterList = boardGameSetup(letterList)
-        printBoardGame(blankLetterList)
+        secWordList = copySecretLetterList(secWord)
+        printBoardGame(secWordList)
         while checking == True:
             userGuess = takeGuess()
             wrongGuess, wrongGuesses = checkGuess(
-                secWord, userGuess, blankLetterList, wrongGuess)
+                secWord, userGuess, secWordList, wrongGuess)
             checking = defineLosing(
-                blankLetterList, wrongGuess, playing, secWord)
+                secWordList, wrongGuess, playing, secWord)
             guessedLetters(wrongGuesses, userGuess, wrongLetters)
-            printBoardGame(blankLetterList)
+            printBoardGame(secWordList)
         playing = playingAgain()
 
 
 def gettingSecretWord():
     secWord = input("Please enter the word you would like to be guessed! ")
     secWord = secWord.lower()
-    blankLetterList = list(secWord)
 
-    return secWord, blankLetterList
+    return secWord
 
 
 def space():
     print("\n" * 10)
 
 
-def copySecretLetterList(userLetterList):
-    letterList = userLetterList.copy()
-
-    return letterList
-
-
-def boardGameSetup(letterList):
-    i = 0
-    for letter in letterList:
-        if letterList[i] != " ":
-            letterList[i] = "_"
-            i += 1
+def copySecretLetterList(secWord):
+    secWordList = []
+    for letter in secWord:
+        if letter != "":
+            letter = "_"
+            secWordList.append(letter)
         else:
-            i += 1
+            letter = " "
+            secWordList.append(letter)
 
-    blankLetterList = letterList
-
-    return blankLetterList
+    return secWordList
 
 
-def printBoardGame(blankLetterList):
+def printBoardGame(secWordList):
+    blankLetterList = secWordList
     for letter in blankLetterList:
-
         print(letter, end=" ")
 
 
@@ -117,12 +108,10 @@ def defineLosing(blankLetterList, wrongGuess, checking, secWord):
 
 def playingAgain():
     retry = input("\nDo you want to play another game? Y or N: ")
-    if retry == "Y" or retry == "y":
-        HangmanApp()
-    else:
-        playing = False
+    retry = retry.upper()
 
-    return playing
+    HangmanApp() if retry == "Y" else exit()
 
 
 HangmanApp()
+
