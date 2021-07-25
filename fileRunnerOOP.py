@@ -360,8 +360,8 @@ class SQL:
     def __init__(self):
         self.conn = conn = pyodbc.connect(
             "Driver={SQL SERVER Native Client 11.0};"
-            "Server=JORDANPC\SQLEXPRESS;"
-            "Database=person;"
+            "Server=YOUR SERVER NAME;"
+            "Database=YOUR DATABASE NAME;"
             "Trusted_Connection=yes;"
         )
         self.cursor = conn.cursor()
